@@ -1,3 +1,7 @@
+# virtualenv
+py3/
+.vscode/
+
 # *.json
 # *.jsonl
 *.jsonlist
