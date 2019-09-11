@@ -1,5 +1,5 @@
-*.json
-*.jsonl
+# *.json
+# *.jsonl
 *.jsonlist
 *.jsonlistx
 *.dat
