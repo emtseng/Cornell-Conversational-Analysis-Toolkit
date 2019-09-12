@@ -1,6 +1,6 @@
 # Friends Dataset
 
-A collection of all the conversations that occurred over 10 seasons of <i>Friends</i>, parsed into ConvoKit format. 
+A collection of all the conversations that occurred over 10 seasons of <i>Friends</i>, parsed into ConvoKit format. Across the 10 seasons there are 236 episodes, 3,107 scenes, 61,309 utterances making for a rich dataset.
 
 ## Dataset Details
 
@@ -32,8 +32,8 @@ We include metadata as follows:
 - **emotion** `list <str>`, emotion labels for each token. Available for some but not all utterances; `None` if unavailable.
 - **transcript_with_note:** `<str>`, a version of the text with an action note (e.g. "(to Ross) Hand me the coffee" vs. "Hand me the coffee"). Available for some but not all utterances; `None` if unavailable.
 - **tokens_with_note:** `list <str>`, a tokenized representation of the above.
-- **caption:** `<str>`, available for some but not all utterances; `None` if unavailable.
-- **character_entities:** `list <str>`, available for some but not all utterances; `None` if unavailable.
+- **caption:** `<str>`, available for some but not all utterances; `None` if unavailable. This contains the begin time, end time, and text sans punctuation. Only available for seasons 6-9.
+- **character_entities:** `list <str>`, available for some but not all utterances; `None` if unavailable. These are intended to identify who the user is speaking to and/or about.
 
 ### Conversation-level information
 
