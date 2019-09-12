@@ -45,18 +45,22 @@ We include:
 
 - **name:** `<str>`, the corpus name ('Friends Dataset').
 
+### Quick Stats
+
+```
+Number of Users: 699
+Number of Utterances: 61338
+Number of Conversations: 3099
+```
+
 ## Usage
 
 To download directly with ConvoKit:
 
->>> from convokit import Corpus, download
->>> corpus = Corpus(filename=download("friends-corpus"))
-
-For some quick stats:
-
-Number of Users: 699
-Number of Utterances: 61338
-Number of Conversations: 3099
+```python
+from convokit import Corpus, download
+corpus = Corpus(filename=download("friends-corpus"))
+```
 
 ## Notes
 
