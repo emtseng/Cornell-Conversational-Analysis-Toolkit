@@ -1,6 +1,6 @@
 # Friends Dataset
 
-A collection of all the conversations that occurred over 10 seasons of <i>Friends</i>, parsed into ConvoKit format.
+A collection of all the conversations that occurred over 10 seasons of <i>Friends</i>, parsed into ConvoKit format. 
 
 ## Dataset Details
 
@@ -11,7 +11,7 @@ Users in this dataset are characters in a given scene. The original dataset prov
 We add the following as user-level metadata:
 
 - <b>first_appearance</b>: `<str>`, the episode in which the character first appeared, i.e. 's01_e01' for season 1, episode 1.
-- <b>gender</b>: `<str>`, the `gender_guesser` module's guess at the character's gender.
+- <b>gender</b>: `<str>`, the `gender_guesser` module's guess at the character's gender i.e., male, female, mostly-male, mostly-feale, unknown.
 
 ### Utterance-level information
 
@@ -19,9 +19,9 @@ This dataset contains a wealth of information at the utterance level.
 
 For each Utterance we provide:
 
-- **id:** `<int>`, index of the utterance
-- **user:** `<str>`, the user who authored the utterance.
-- **root:** `<int>`, id of the conversation root of the utterance.
+- **id:** `<int>`, index of the utterance.
+- **user:** `<str>`, the user who authored the utterance, or the speaker in our case (e.g., Monica Geller).
+- **root:** `<int>`, id of the conversation root of the utterance. We assume  conversations begin at the start of a new scene.
 - **reply_to:** `<int>`, id of the utterance to which this utterance replies to. `None` if the utterance is not a reply.
 - **timestamp:** `None`. Our dataset does not contain timestamp information for utterances.
 - **text:** `<str>`, The textual content of the utterance.
@@ -37,7 +37,7 @@ We include metadata as follows:
 
 ### Conversation-level information
 
-TODO
+Conversations are indexed by the id of the first utterance that make the conversation.
 
 ### Corpus-level information
 
@@ -45,19 +45,22 @@ We include:
 
 - **name:** `<str>`, the corpus name ('Friends Dataset').
 
-### Quick Stats
+## Usage
 
-```
+To download directly with ConvoKit:
+
+>>> from convokit import Corpus, download
+>>> corpus = Corpus(filename=download("friends-corpus"))
+
+For some quick stats:
+
 Number of Users: 699
 Number of Utterances: 61338
 Number of Conversations: 3099
-```
-
-## Usage
 
 ## Notes
 
-The original dataset is available [here](https://github.com/emorynlp/character-mining) from the Emory NLP group.
+The original dataset is available [here] (https://github.com/emorynlp/character-mining) from the Emory NLP group.
 
 ## Contact
 
