@@ -1,20 +1,25 @@
 # Friends Dataset
 
-This README will contain dataset details.
+A collection of all the conversations that occurred over 10 seasons of <i>Friends</i>, parsed into ConvoKit format.
 
-## Setup
+## Dataset Details
 
-Create a virtualenv, ideally called `py3/`. This should get your local python3 installation.
+### User-level information
 
-```cli
-pip3 install virtualenv
-virtualenv py3/
-pip3 install -r requirements.txt
-```
+### Utterance-level information
 
-Then for each time you want to use it, activate the environment and then install the dependencies:
+### Conversation-level information
 
-```cli
-source py3/bin/activate
-pip install -r requirements.txt
-```
+### Corpus-level information
+
+### Quick Stats
+
+## Usage
+
+## Notes
+
+The original dataset is available [here](https://github.com/emorynlp/character-mining) from the Emory NLP group.
+
+## Contact
+
+Corpus translated into ConvoKit format by Katharine Sadowski, Emily Tseng and Nianyi Wang.
