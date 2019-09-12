@@ -14,6 +14,12 @@ A collection of all the conversations that occurred over 10 seasons of <i>Friend
 
 ### Quick Stats
 
+```
+Number of Users: 699
+Number of Utterances: 61338
+Number of Conversations: 3099
+```
+
 ## Usage
 
 ## Notes
