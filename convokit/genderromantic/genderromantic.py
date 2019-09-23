@@ -5,10 +5,11 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 import re
 
 class Genderromantic(Transformer):
+    romantic_words = ["adorable","amazing","angel","babe","beau","beautiful","beloved","darling","dearest","enchanting","lover","gorgeous","handsome","heavenly","honey","life-changing","paramour","sweetheart","sweetie","swoon","wonderful","adore","admire","care","cherish","choose","daydream","delight","dream","need","prize","treasure","value","want","worship","yearn","date ","love","kiss","sex","romance","romantic","hug"]
 
     def __init__(self):
         pass
-
+    
     @staticmethod
     def genderDictionary(arg):
         name_to_gender = {}
@@ -16,7 +17,7 @@ class Genderromantic(Transformer):
             if user.name not in name_to_gender:
                 name_to_gender[user.name] = user.meta['gender']
         return name_to_gender
-
+        
     def transform(self, corpus: Corpus):
         name_to_gender = self.genderDictionary(corpus)
         ps = PorterStemmer()
@@ -30,12 +31,11 @@ class Genderromantic(Transformer):
             male_about_female = False
             female_about_male = False
             
-            romantic_words = [ps.stem(line.rstrip('\n')) for line in open('RomanticWords.txt', 'r')]
             tokens = utt.meta['tokens']
             for token in tokens:
                 for word in token:
                     word=re.sub(r'[^\w\s]', '', word)
-                    if ps.stem(word) in romantic_words:
+                    if ps.stem(word) in Genderromantic.romantic_words:
                         contains_romantic = True
                         break
             
