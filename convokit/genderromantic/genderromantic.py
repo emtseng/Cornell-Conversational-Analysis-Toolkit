@@ -18,7 +18,8 @@ class Genderromantic(Transformer):
         return name_to_gender
 
     def transform(self, corpus: Corpus):
-        name_to_gender = genderDictionary(corpus)
+        name_to_gender = self.genderDictionary(corpus)
+        ps = PorterStemmer()
         for utt in corpus.iter_utterances():
             speaker_name = utt.user.name
             speaker_gender = utt.user.meta['gender']
