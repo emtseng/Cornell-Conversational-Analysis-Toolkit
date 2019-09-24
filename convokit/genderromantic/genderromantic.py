@@ -41,7 +41,7 @@ class Genderromantic(Transformer):
             
             if character_entities is not None:        
                 for ces in character_entities:
-                    if len(ce) == 0:
+                    if len(ces) == 0:
                         continue
                     for ce in ces:
                         if len(ce) == 0 or ce[2] == speaker_name or ce[2][0] == '#':
