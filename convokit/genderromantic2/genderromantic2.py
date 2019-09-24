@@ -29,14 +29,11 @@ class Genderromantic2(Transformer):
             contains_romantic = False
             male_about_female = False
             female_about_male = False
-            
-            tokens = utt.meta['tokens']
-            for token in tokens:
-                for word in token:
-                    word=re.sub(r'[^\w\s]', '', word)
-                    if ps.stem(word) in Genderromantic2.romantic_words:
-                        contains_romantic = True
-                        break
+
+            for romantic_word in Genderromantic2.romantic_words:
+                if romantic_word.lower() in utt.text.lower():
+                    contains_romantic = True
+                    break
             
             utt.add_meta('female_about_male', female_about_male)
             utt.add_meta('male_about_female', male_about_female)
