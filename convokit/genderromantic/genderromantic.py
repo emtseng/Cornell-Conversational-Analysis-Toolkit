@@ -21,6 +21,11 @@ class Genderromantic(Transformer):
     def transform(self, corpus: Corpus):
         name_to_gender = self.genderDictionary(corpus)
         ps = PorterStemmer()
+        current_scene = next(corpus.iter_utterances()).id[:11]
+        current_gender = next(corpus.iter_utterances()).user.meta['gender']
+        only_male = 'male' in current_gender and 'female' not in current_gender
+        only_female = 'female' in current_gender
+        converation_gender = {}
         for utt in corpus.iter_utterances():
             speaker_name = utt.user.name
             speaker_gender = utt.user.meta['gender']
@@ -62,4 +67,19 @@ class Genderromantic(Transformer):
             utt.add_meta('female_about_male', female_about_male)
             utt.add_meta('male_about_female', male_about_female)
             utt.add_meta('contains_romantic', contains_romantic)
+            
+            if current_scene == utt.id[:11]:
+                if 'female' in speaker_gender:
+                    only_male = False
+                elif 'male' in speaker_gender:
+                    only_female = False
+                else:
+                    only_female = False
+                    only_male = False
+            else:
+                conversation_gender[current_scene] = {'only_male': only_male, 'only_female': only_female}
+                current_scene = utt.id[:11]
+                only_male = True
+                only_female = True
+        corpus.conversations['meta'] = conversation_gender
         return corpus
