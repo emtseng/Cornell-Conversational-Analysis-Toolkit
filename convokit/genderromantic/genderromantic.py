@@ -25,7 +25,7 @@ class Genderromantic(Transformer):
         current_gender = next(corpus.iter_utterances()).user.meta['gender']
         only_male = 'female' not in current_gender and 'male' in current_gender
         only_female = 'female' in current_gender
-        converation_gender = {}
+        conversation_gender = {}
         for utt in corpus.iter_utterances():
             speaker_name = utt.user.name
             speaker_gender = utt.user.meta['gender']
