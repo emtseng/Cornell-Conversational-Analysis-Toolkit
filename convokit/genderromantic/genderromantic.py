@@ -23,7 +23,7 @@ class Genderromantic(Transformer):
         ps = PorterStemmer()
         current_scene = next(corpus.iter_utterances()).id[:11]
         current_gender = next(corpus.iter_utterances()).user.meta['gender']
-        only_male = 'male' in current_gender and 'female' not in current_gender
+        only_male = 'female' not in current_gender and 'male' in current_gender
         only_female = 'female' in current_gender
         converation_gender = {}
         for utt in corpus.iter_utterances():
@@ -79,7 +79,7 @@ class Genderromantic(Transformer):
             else:
                 conversation_gender[current_scene] = {'only_male': only_male, 'only_female': only_female}
                 current_scene = utt.id[:11]
-                only_male = True
-                only_female = True
+                only_male = 'female' not in speaker_gender and 'male' in speaker_gender
+                only_female = 'female' in speaker_gender
         corpus.conversations['meta'] = conversation_gender
         return corpus
