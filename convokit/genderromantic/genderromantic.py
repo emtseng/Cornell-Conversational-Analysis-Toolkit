@@ -35,6 +35,8 @@ class Genderromantic(Transformer):
             contains_romantic = False
             male_about_female = False
             female_about_male = False
+            female_about_female = False
+            male_about_male = False
             
             tokens = utt.meta['tokens']
             for token in tokens:
@@ -54,19 +56,29 @@ class Genderromantic(Transformer):
                         if ce[2] not in name_to_gender:
                             if ce[2].startswith('Man'):
                                 male_about_female = False
+                                male_about_male = True & gender_is_female = False
                                 female_about_male = True & gender_is_female
+                                female_about_female = False 
                             elif ce[2].startswith('Woman'):
-                                male_about_female = True & gender_is_female
+                                male_about_female = True & gender_is_female = False
+                                male_about_male = False
                                 female_about_male = False
+                                female_about_female = True & gender_is_female
                         elif 'female' in name_to_gender[ce[2]]:
-                            male_about_female = True & gender_is_female
+                            male_about_female = True & gender_is_female = False
+                            male_about_male = False
                             female_about_male = False
+                            female_about_female = True & gender_is_female
                         elif 'male' in name_to_gender[ce[2]]:
                             male_about_female = False
+                            male_about_male = True & gender_is_female = False
                             female_about_male = True & gender_is_female
+                            female_about_female = False
             utt.add_meta('female_about_male', female_about_male)
             utt.add_meta('male_about_female', male_about_female)
             utt.add_meta('contains_romantic', contains_romantic)
+            utt.add_meta('male_about_male', male_about_male)
+            utt.add_meta('female_about_female', female_about_female)
             
             if current_scene == utt.id[:11]:
                 if 'female' in speaker_gender:
