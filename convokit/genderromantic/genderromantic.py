@@ -109,10 +109,14 @@ class Genderromantic(Transformer):
                         word = word.lower()
                         if word == 'he' or word == 'him':
                             female_about_male = speaker_is_female #true iff the speaker is a female
+                            male_about_male = not speaker_is_female
                             male_about_female = False #false because this is _about_male
+                            female_about_female = False
                         elif word == 'she' or word == 'her':
                             male_about_female = not speaker_is_female #true iff the speaker is not a female
+                            female_about_female = speaker_is_female
                             female_about_male = False #false because this is _about_female
+                            male_about_male = False
 
             utt.add_meta('female_about_female', female_about_female)
             utt.add_meta('female_about_male', female_about_male)
