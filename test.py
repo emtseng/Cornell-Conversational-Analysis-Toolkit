@@ -90,4 +90,3 @@ if __name__=="__main__":
     grr = Genderromantic(verbose=True)
     transformed_corpus = grr.fit_transform(corpus)
     run_stats(transformed_corpus)
-    corpus = Corpus(filename='./datasets/switchboard-corpus/corpus')

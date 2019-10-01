@@ -20,9 +20,9 @@ class Genderromantic(Transformer):
         for user in arg.iter_users():
             if user.name not in name_to_gender:
                 if 'gender' in user.meta:
-                    name_to_gender[user.name] = user.meta['gender']
+                    name_to_gender[user.name] = user.meta['gender'].lower()
                 elif 'sex' in user.meta:
-                    name_to_gender[user.name] = user.meta['sex']
+                    name_to_gender[user.name] = user.meta['sex'].lower()
                 else:
                     raise EnvironmentError('Neither gender nor sex meta available for users.')
         return name_to_gender
@@ -45,7 +45,6 @@ class Genderromantic(Transformer):
         for utt in tqdm(corpus.iter_utterances()):
             speaker_name = utt.user.name
             speaker_gender = name_to_gender[speaker_name]
-            # speaker_gender = utt.user.meta['gender'].lower() or utt.user.meta['sex'].lower()
             speaker_is_female = speaker_gender == 'female'
 
             contains_romantic = False
