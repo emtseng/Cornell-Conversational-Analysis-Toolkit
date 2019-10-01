@@ -85,8 +85,8 @@ def run_stats(transformed_corpus: Corpus):
 
 
 if __name__=="__main__":
-    # corpus = Corpus(filename='./datasets/friends-corpus/corpus')
-    corpus = Corpus(filename='./datasets/switchboard-corpus/corpus')
+    corpus = Corpus(filename='./datasets/friends-corpus/corpus')
+    # corpus = Corpus(filename='./datasets/switchboard-corpus/corpus')
     grr = Genderromantic(verbose=True)
     transformed_corpus = grr.fit_transform(corpus)
     run_stats(transformed_corpus)

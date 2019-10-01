@@ -70,37 +70,36 @@ class Genderromantic(Transformer):
                         break
 
             # Then handle gender
-            if 'character_entities' in utt.meta:
-                # If character entities are present, i.e. for the Friends corpus, use them to derive male_about_female, female_about_male and contains_romantic.
+            # If character entities are present, i.e. for the Friends corpus, use them to derive male_about_female, female_about_male and contains_romantic.
+            if 'character_entities' in utt.meta and utt.meta['character_entities'] is not None and utt.meta['character_entities'] is not [[]] and utt.meta['character_entities'] is not []:
                 character_entities = utt.meta['character_entities']
-                if character_entities is not None:        
-                    for ces in character_entities:
-                        if len(ces) == 0:
+                for ces in character_entities:
+                    if len(ces) == 0:
+                        continue
+                    for ce in ces:
+                        if len(ce) == 0 or ce[2] == speaker_name or ce[2][0] == '#':
                             continue
-                        for ce in ces:
-                            if len(ce) == 0 or ce[2] == speaker_name or ce[2][0] == '#':
-                                continue
-                            if ce[2] not in name_to_gender:
-                                if ce[2].startswith('Man'):
-                                    male_about_female = False
-                                    female_about_male = speaker_is_female
-                                    male_about_male =  not speaker_is_female
-                                    female_about_female = False
-                                elif ce[2].startswith('Woman'):
-                                    male_about_female = not speaker_is_female
-                                    female_about_male = False
-                                    male_about_male = False
-                                    female_about_female = speaker_is_female
-                            elif 'female' in name_to_gender[ce[2]]:
-                                male_about_female = not speaker_is_female
-                                female_about_male = False
-                                male_about_male = False
-                                female_about_female = speaker_is_female
-                            elif 'male' in name_to_gender[ce[2]]:
+                        if ce[2] not in name_to_gender:
+                            if ce[2].startswith('Man'):
                                 male_about_female = False
                                 female_about_male = speaker_is_female
                                 male_about_male =  not speaker_is_female
                                 female_about_female = False
+                            elif ce[2].startswith('Woman'):
+                                male_about_female = not speaker_is_female
+                                female_about_male = False
+                                male_about_male = False
+                                female_about_female = speaker_is_female
+                        elif 'female' in name_to_gender[ce[2]]:
+                            male_about_female = not speaker_is_female
+                            female_about_male = False
+                            male_about_male = False
+                            female_about_female = speaker_is_female
+                        elif 'male' in name_to_gender[ce[2]]:
+                            male_about_female = False
+                            female_about_male = speaker_is_female
+                            male_about_male =  not speaker_is_female
+                            female_about_female = False
             else:
             # If character entities are not present, do this based on pronouns in the utterance text.
             # First look at pronouns:
@@ -124,11 +123,13 @@ class Genderromantic(Transformer):
             # If you've told it to be verbose, it'll print examples for debugging
             if self.verbose:
                 if male_about_female:
+                    print(utt.id)
                     if contains_romantic:
                         print('found male speaking romance and also about a female:\n{}: {}\n'.format(utt.user.name, utt.text))
                     else:
                         print('found male speaking about female:\n{}: {}\n'.format(utt.user.name, utt.text))
                 elif female_about_male:
+                    print(utt.id)
                     if contains_romantic:
                         print('found female speaking romance and also about a male:\n{}: {}\n'.format(utt.user.name, utt.text))
                     else:
