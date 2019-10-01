@@ -1,7 +1,7 @@
 # Convenience testing for genderromantic transformer
 
 import convokit
-from convokit import Corpus, Genderromantic, Parser
+from convokit import Corpus, Genderromantic
 
 def run_stats(transformed_corpus: Corpus):
     male_speaking = 0
@@ -84,8 +84,6 @@ def run_stats(transformed_corpus: Corpus):
 
 if __name__=="__main__":
     corpus = Corpus(filename='./datasets/friends-corpus/corpus')
-    # parser = Parser()
     grr = Genderromantic(verbose=True)
-    # parsed_corpus = parser.fit_transform(corpus)
     transformed_corpus = grr.fit_transform(corpus)
     run_stats(transformed_corpus)
