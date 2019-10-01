@@ -34,7 +34,10 @@ class Genderromantic(Transformer):
         ps = PorterStemmer()
         # Init your current scene and initial gender values
         current_scene = next(corpus.iter_utterances()).id[:11]
-        current_gender = next(corpus.iter_utterances()).user.meta['gender'].lower() or next(corpus.iter_utterances()).user.meta['sex'].lower()
+        if 'gender' in next(corpus.iter_utterances()).user.meta:
+            current_gender = next(corpus.iter_utterances()).user.meta['gender'].lower()
+        elif 'sex' in next(corpus.iter_utterances()).user.meta:
+            current_gender = next(corpus.iter_utterances()).user.meta['sex'].lower()
         only_male = 'female' not in current_gender and 'male' in current_gender
         only_female = 'female' in current_gender
         conversation_gender = {}
