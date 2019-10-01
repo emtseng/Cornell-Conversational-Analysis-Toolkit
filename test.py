@@ -19,15 +19,17 @@ def run_stats(transformed_corpus: Corpus):
     romantic = 0
     not_romantic = 0
 
-
     utterance_ids = transformed_corpus.get_utterance_ids()
-    assert len(utterance_ids) == 61338
 
     for uid in utterance_ids:
         utt=transformed_corpus.get_utterance(uid)
         
         # First get whether it's a male or female speaker
-        speaker_gender = utt.user.meta['gender']
+        if 'gender' in utt.user.meta:
+            speaker_gender = utt.user.meta['gender'].lower()
+        elif 'sex' in utt.user.meta:
+            speaker_gender = utt.user.meta['sex'].lower()
+
         if speaker_gender == "male":
             male_speaking += 1
         if speaker_gender == "female":
@@ -83,7 +85,9 @@ def run_stats(transformed_corpus: Corpus):
 
 
 if __name__=="__main__":
-    corpus = Corpus(filename='./datasets/friends-corpus/corpus')
+    # corpus = Corpus(filename='./datasets/friends-corpus/corpus')
+    corpus = Corpus(filename='./datasets/switchboard-corpus/corpus')
     grr = Genderromantic(verbose=True)
     transformed_corpus = grr.fit_transform(corpus)
     run_stats(transformed_corpus)
+    corpus = Corpus(filename='./datasets/switchboard-corpus/corpus')

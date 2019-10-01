@@ -1,7 +1,7 @@
 from convokit.model import Corpus, User
 from convokit.transformer import Transformer
 from nltk.stem import PorterStemmer
-from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.tokenize import sent_tokenize, word_tokenize, wordpunct_tokenize
 import re
 from tqdm import tqdm
 
@@ -50,13 +50,16 @@ class Genderromantic(Transformer):
 
             contains_romantic = False
             male_about_female = False
+            male_about_male = False
             female_about_male = False
+            female_about_female = False
 
             # First handle contains_romantic.
             if 'tokens' in utt.meta:
                 tokens = utt.meta['tokens']
             else:
-                tokens = sent_tokenize(utt.text)
+                tokens = [wordpunct_tokenize(utt.text)]
+                # tokens = sent_tokenize(utt.text)
 
             for sentence in tokens:
                 for token in sentence:
@@ -82,15 +85,23 @@ class Genderromantic(Transformer):
                                 if ce[2].startswith('Man'):
                                     male_about_female = False
                                     female_about_male = speaker_is_female
+                                    male_about_male =  not speaker_is_female
+                                    female_about_female = False
                                 elif ce[2].startswith('Woman'):
                                     male_about_female = not speaker_is_female
                                     female_about_male = False
+                                    male_about_male = False
+                                    female_about_female = speaker_is_female
                             elif 'female' in name_to_gender[ce[2]]:
                                 male_about_female = not speaker_is_female
                                 female_about_male = False
+                                male_about_male = False
+                                female_about_female = speaker_is_female
                             elif 'male' in name_to_gender[ce[2]]:
                                 male_about_female = False
                                 female_about_male = speaker_is_female
+                                male_about_male =  not speaker_is_female
+                                female_about_female = False
             else:
             # If character entities are not present, do this based on pronouns in the utterance text.
             # First look at pronouns:
@@ -105,8 +116,10 @@ class Genderromantic(Transformer):
                             male_about_female = not speaker_is_female #true iff the speaker is not a female
                             female_about_male = False #false because this is _about_female
 
+            utt.add_meta('female_about_female', female_about_female)
             utt.add_meta('female_about_male', female_about_male)
             utt.add_meta('male_about_female', male_about_female)
+            utt.add_meta('male_about_male', male_about_male)
             utt.add_meta('contains_romantic', contains_romantic)
 
             # If you've told it to be verbose, it'll print examples for debugging
@@ -116,11 +129,13 @@ class Genderromantic(Transformer):
                         print('found male speaking romance and also about a female:\n{}: {}\n'.format(utt.user.name, utt.text))
                     else:
                         print('found male speaking about female:\n{}: {}\n'.format(utt.user.name, utt.text))
-                if female_about_male:
+                elif female_about_male:
                     if contains_romantic:
                         print('found female speaking romance and also about a male:\n{}: {}\n'.format(utt.user.name, utt.text))
                     else:
                         print('found female speaking about male:\n{}: {}\n'.format(utt.user.name, utt.text))
+                # else:
+                #     print('nothing found:\n{}, {}: {}'.format(utt.user.name, utt.user.meta['sex'], tokens))
 
             # Then get the conversation-level gender attributes
             if current_scene == utt.id[:11]:
