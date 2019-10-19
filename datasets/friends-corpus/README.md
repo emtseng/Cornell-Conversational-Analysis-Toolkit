@@ -1,6 +1,8 @@
-# Friends Dataset
+# friends-corpus
 
 A collection of all the conversations that occurred over 10 seasons of <i>Friends</i>, parsed into ConvoKit format. Across the 10 seasons there are 236 episodes, 3,107 scenes/conversations, and 67,373 utterances.
+
+To generate this dataset, refer to [convert_convokit.ipynb](./convert_convokit.ipynb).
 
 ## Dataset Details
 
