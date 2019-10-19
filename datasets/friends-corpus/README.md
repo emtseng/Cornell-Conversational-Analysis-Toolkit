@@ -33,7 +33,7 @@ We include metadata as follows:
 - **transcript_with_note:** `<str>`, a version of the text with an action note (e.g. "(to Ross) Hand me the coffee" vs. "Hand me the coffee"). Available for some but not all utterances; `None` if unavailable.
 - **tokens_with_note:** `list <str>`, a tokenized representation of the above.
 - **caption:** `<str>`, available for some but not all utterances; `None` if unavailable. This contains the begin time, end time, and text sans punctuation. Only available for seasons 6-9.
-- **character_entities:** `list <str>`, available for some but not all utterances; `None` if unavailable. These are intended to identify who the user is speaking to and/or about.
+- **character_entities:** `list <str>`, available for some but not all utterances; `None` if unavailable. These are intended to identify who the user is speaking to and/or about. For example, if we have tokens of transcripts _[["There", "'s", "nothing", "to", "tell", "!"],["He", "'s", "just", "some", "guy", "I", "work", "with", "!"]]_ and character entities _[[],[[0, 1, "Paul the Wine Guy"], [4, 5, "Paul the Wine Guy"], [5, 6, "Monica Geller"]]]_, it means that no one gets refered in the first sentence, in the second sentence, "_He_" at index 0 and "_guy_" at index 4 refer to "_Paul the Wine Guy_", and "_I_" at index 5 refer to "_Monica Geller_".
 
 ### Conversation-level information
 
